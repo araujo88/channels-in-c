@@ -1,12 +1,13 @@
 #include <stdio.h>
 #include <pthread.h>
 #include <unistd.h>
+#include "../include/channel.h"
 
-// Include the channel structure and functions here
-
-void *producer(void *arg) {
+void *producer(void *arg)
+{
   channel *ch = (channel *)arg;
-  for (int i = 0; i < 20; i++) {
+  for (int i = 0; i < 20; i++)
+  {
     channel_send(ch, i);
     printf("Sent: %d\n", i);
     usleep(100000); // Sleep for 100ms
@@ -14,9 +15,11 @@ void *producer(void *arg) {
   return NULL;
 }
 
-void *consumer(void *arg) {
+void *consumer(void *arg)
+{
   channel *ch = (channel *)arg;
-  for (int i = 0; i < 20; i++) {
+  for (int i = 0; i < 20; i++)
+  {
     int value = channel_receive(ch);
     printf("Received: %d\n", value);
     usleep(150000); // Sleep for 150ms
@@ -24,7 +27,8 @@ void *consumer(void *arg) {
   return NULL;
 }
 
-int main() {
+int main()
+{
   channel ch;
   channel_init(&ch);
 
@@ -40,4 +44,3 @@ int main() {
 
   return 0;
 }
-  
